@@ -1,0 +1,183 @@
+<<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>for meysha</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+
+body{
+  font-family:'Fredoka',sans-serif;
+  background:radial-gradient(circle at top,#2a0050,#0d001a);
+  color:white;
+  overflow:hidden;
+}
+
+/* SCREEN */
+.screen{
+  position:absolute;
+  width:100%;
+  height:100vh;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  transition:0.6s;
+}
+
+.hidden{
+  opacity:0;
+  pointer-events:none;
+  transform:translateX(40px);
+}
+
+/* BUTTON */
+button{
+  padding:12px 24px;
+  border:none;
+  border-radius:16px;
+  background:#6b3cff;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  margin:10px;
+  position:relative;
+  z-index:10;
+  transition:.2s;
+}
+button:hover{transform:scale(1.1)}
+
+/* FLOWER */
+.flower{
+  position:fixed;
+  top:-40px;
+  font-size:20px;
+  animation:fall linear forwards;
+  pointer-events:none;
+  z-index:0;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh) rotate(360deg);opacity:0}
+}
+
+/* LETTER */
+.letter{
+  max-width:600px;
+  font-size:18px;
+  line-height:1.6;
+  opacity:0;
+  transition:1s;
+}
+.show{opacity:1}
+</style>
+</head>
+
+<body>
+
+<!-- OPENING -->
+<div class="screen" id="opening">
+  <h1>🌸 for meysha 🌸</h1>
+  <p>do u want to play a game?</p>
+  <div>
+    <button id="yesBtn">YES</button>
+    <button id="noBtn">NO</button>
+  </div>
+</div>
+
+<!-- GAME -->
+<div class="screen hidden" id="game">
+  <h1>Catch the heart 💜</h1>
+  <button id="heart" style="position:absolute">💜</button>
+  <p id="score">0 / 5</p>
+</div>
+
+<!-- LETTER -->
+<div class="screen hidden" id="letter">
+  <div class="letter" id="letterText">
+    haii pucii, maaf yaa kalau kadang sifat dari el ada yang ga kamu suka,
+    im so sorry, but if u know, in the middle of night i was thinking abt u,
+    i love n i never hate u, ur'e the only one for me,
+    and i hope u never gonna leave me alone,
+    i love uu so much pucii 💜
+  </div>
+  <button id="nextBtn">NEXT</button>
+</div>
+
+<!-- LAST -->
+<div class="screen hidden" id="last">
+  <h1>i love u forever 💜</h1>
+  <p>lucu, nyebelin, TENGIL tapi el suka mwehehe</p>
+</div>
+
+<audio autoplay loop>
+  <source src="https://cdn.pixabay.com/audio/2023/03/14/audio_1b8b9c.mp3">
+</audio>
+
+<script>
+const opening=document.getElementById("opening")
+const game=document.getElementById("game")
+const letter=document.getElementById("letter")
+const last=document.getElementById("last")
+
+const yesBtn=document.getElementById("yesBtn")
+const noBtn=document.getElementById("noBtn")
+const heart=document.getElementById("heart")
+const scoreText=document.getElementById("score")
+const nextBtn=document.getElementById("nextBtn")
+const letterText=document.getElementById("letterText")
+
+let score=0
+
+function show(hide,show){
+  hide.classList.add("hidden")
+  setTimeout(()=>show.classList.remove("hidden"),300)
+}
+
+/* YES */
+yesBtn.onclick=()=>show(opening,game)
+
+/* NO KABUR */
+noBtn.onmouseover=()=>{
+  noBtn.style.position="absolute"
+  noBtn.style.top=Math.random()*80+"%"
+  noBtn.style.left=Math.random()*80+"%"
+}
+
+/* GAME */
+heart.onclick=()=>{
+  score++
+  scoreText.textContent=score+" / 5"
+
+  heart.style.top=Math.random()*80+"%"
+  heart.style.left=Math.random()*80+"%"
+
+  if(score>=5){
+    show(game,letter)
+    setTimeout(()=>letterText.classList.add("show"),400)
+  }
+}
+
+/* NEXT */
+nextBtn.onclick=()=>show(letter,last)
+
+/* FLOWER LOOP */
+function flower(){
+  const f=document.createElement("div")
+  f.className="flower"
+  f.textContent="🌸"
+  f.style.left=Math.random()*100+"vw"
+  f.style.animationDuration=5+Math.random()*5+"s"
+  document.body.appendChild(f)
+  setTimeout(()=>f.remove(),10000)
+}
+setInterval(flower,500)
+</script>
+
+</body>
+</html>
